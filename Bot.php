@@ -32,11 +32,17 @@ Class Bot
 		$ch = curl_init();
 		$ref = '';
 		$CURL_TIMEOUT = 2;
+
+		$header = array(
+			"Content-type: text/html; charset=utf-8", 
+		);
+
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
 		curl_setopt($ch, CURLOPT_TIMEOUT, $CURL_TIMEOUT);    // Timeout
 		curl_setopt($ch, CURLOPT_USERAGENT, $this->agent);   // Webbot name
 		curl_setopt($ch, CURLOPT_URL, $url);             // Target site
-		curl_setopt($ch, CURLOPT_REFERER, $ref);  			// Referer value
-		curl_setopt ($ch, CURLOPT_HTTPGET, TRUE);          
+		curl_setopt($ch, CURLOPT_HTTPGET, TRUE);   
+		curl_setopt($ch, CURLOPT_ENCODING , "");       
 		curl_setopt($ch, CURLOPT_VERBOSE, FALSE);           // Minimize logs
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);    // No certificate
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);     // Follow redirects
@@ -58,8 +64,15 @@ Class Bot
 	 */
 	public function parserUrl($content)
 	{
-
-
+		$urlList = array();
+		$html = new DOMDocument();
+		$html->loadHTML($content);
+		$tags = $html->getElementsByTagName('a');
+		foreach ($tags as $key => $value) {
+			$urlList[] = array('href' =>$value-> getAttribute('href') ,
+								'title'=>$value-> getAttribute('title'));	
+		}
+		return $urlList;
 	}
 
 	/**
