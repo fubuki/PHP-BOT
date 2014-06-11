@@ -76,7 +76,7 @@ Class Bot
 	}
 
 	/**
-	 * 找出連結跟其他連結之間相關性最大的部分
+	 * 找出連結跟其他連結之間的相關性
 	 * @param  string $url
 	 * @param  array $entity
 	 * @return [type]
@@ -84,6 +84,18 @@ Class Bot
 	public function compareUrlSimilar($url, $entity)
 	{
 
+
+	}
+
+
+	/**
+	 * 利用exec呼叫wordnet
+	 * @param  [type] $word [description]
+	 * @return [type]       [description]
+	 */
+	public function callWordNet($word)
+	{
+		$result = shell_exec('/usr/bin/wn '.$word.' -synsn');
 
 	}
 
