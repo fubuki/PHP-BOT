@@ -17,8 +17,13 @@ Class Bot
   	 */
 	public function urlWalkPath($start, $end)
 	{
-
-
+		$startContent = $this->getContent($start);
+		$startUrl = $this->parserUrl($startContent);
+		$endContent = $this->getContent($end);
+		$endUrl = $this->parserUrl($endContent);
+		foreach ($startUrl as $value) {
+			$this->compareUrlSimilar($value, $endUrl);
+		}
 	}
 
 	/**
@@ -49,7 +54,7 @@ Class Bot
 		curl_setopt($ch, CURLOPT_MAXREDIRS, 4);             // Limit redirections to four
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);     // Return in string
     
-    	$return_array['FILE']   = curl_exec($ch); 
+	    	$return_array['FILE']   = curl_exec($ch); 
    		$return_array['STATUS'] = curl_getinfo($ch);
    		$return_array['ERROR']  = curl_error($ch);
    
@@ -70,7 +75,7 @@ Class Bot
 		$tags = $html->getElementsByTagName('a');
 		foreach ($tags as $key => $value) {
 			$urlList[] = array('href' =>$value-> getAttribute('href') ,
-								'title'=>$value-> getAttribute('title'));	
+					'title'=>$value-> getAttribute('title'));	
 		}
 		return $urlList;
 	}
