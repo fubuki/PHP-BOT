@@ -17,3 +17,7 @@ Meta tag 也當作權重的一部分。
 
 
 [wordnet]:http://wordnet.princeton.edu/
+
+#### reference
+
+1. Web Scale NLP: A Case Study on URL Word Breaking
